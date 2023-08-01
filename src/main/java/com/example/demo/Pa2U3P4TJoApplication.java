@@ -245,11 +245,11 @@ public class Pa2U3P4TJoApplication implements CommandLineRunner {
 		
 		this.materiaService.agregar(materia1);*/
 		
-		List<String>codigosMateria = new ArrayList<>();
+		/*List<String>codigosMateria = new ArrayList<>();
 		codigosMateria.add("1A");
 		codigosMateria.add("1B");
 		
-		this.matriculaService.matricular("1720525516", codigosMateria);
+		this.matriculaService.matricular("1720525516", codigosMateria);*/
 	}
 
 }
