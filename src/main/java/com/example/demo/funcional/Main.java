@@ -1,5 +1,9 @@
 package com.example.demo.funcional;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,67 +13,33 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// METODOS HIGH ORDER
-		// SUPPLIER*******************************************************************************
-		// CLASE
-		IPersonaSupplier<String> pSupplier = new PersonaSupplierImpl();
-		MetodosHighOrder.metodo(pSupplier);
+		List<Integer> listaNumero = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+		
+		// LIBRERIAS FUNCIONALES DE JAVA CON METODOS REFERENCIADOS
+		// SUPLIER
+		LOG.info("SUPLIER ****************************************************************");
+		Stream<String> lista = Stream.generate(MetodosReferenciados::getIdHO).limit(2);
+		lista.forEach(cadena -> LOG.info("SUPLIER: "+cadena));
 
-		// LAMBDA
-		MetodosHighOrder.metodo(() -> "5555888HO");
+		// CONSUMER
+		LOG.info("CONSUMER ****************************************************************");
+		List<String> listName = Arrays.asList("Josue","Luis","Diego","Andres");
+		listName.forEach(MetodosReferenciados::aceptar);
+		
+		// PREDICATE
+		LOG.info("PREDICATE ****************************************************************");
+		Stream<Integer> listaFinal = listaNumero.stream().filter(MetodosReferenciados::evaluacion);
+		listaFinal.forEach(numero -> LOG.info("Valor :" + numero));
 
-		// METODOS REFERENCIADOS
-		MetodosHighOrder.metodo(MetodosReferenciados::getIdHO);
-
-		// CONSUMMER******************************************************************************
-		// CLASE
-		IPersonaConsumer<String> pConsummer = new PersonaConsumerImpl();
-		MetodosHighOrder.metodoConsummer(pConsummer, "test Clase");
-
-		// LAMBDA
-		MetodosHighOrder.metodoConsummer(cadena -> LOG.info("HO -Lambda" + cadena), " test Lambda");
-
-		// METODOS REFERENCIADOS
-		MetodosHighOrder.metodoConsummer(MetodosReferenciados::aceptar, "test Referenciados");
-
-		// PREDICATE******************************************************************************
-		// CLASE
-		IPersonaPredicate<Integer> personaPredicate = new PersonaPredicateImpl();
-		MetodosHighOrder.metodoPredicate(personaPredicate, 8);
-
-		// LAMBDA
-		MetodosHighOrder.metodoPredicate(expresion -> {
-			boolean v = expresion>2;
-			LOG.info("El resultado es: " + v);
-			return expresion > 0;
-		}, 1);
-
-		// METODOS REFERENCIADOS
-		MetodosHighOrder.metodoPredicate(MetodosReferenciados::evaluacion, 10);
-
-		// FUNCTION*******************************************************************************
-		// CLASE
-		IPersonaFunction<String, Integer> personaFunction = new PersonaFunctionImpl();
-		MetodosHighOrder.metodoFunction(personaFunction, 4);
-
-		// LAMBDA
-		MetodosHighOrder.metodoFunction(arg -> arg.toString().concat(" en string"), 5);
-
-		// METODOS REFERENCIADOS
-
-		MetodosHighOrder.metodoFunction(MetodosReferenciados::aplicar, 15);
+		// FUNCTION
+		LOG.info("FUNCTION ****************************************************************");
+		Stream<String> listaCambiada = listaNumero.stream().map(MetodosReferenciados::aplicar);
+		listaCambiada.forEach(MetodosReferenciados::aceptar);
 
 		// UNARY OPERATOR
-		// ************************************************************************
-		// CLASE
-		IPersonaUnaryOperator<Integer> personaUnaryOperator = new PersonaUnaryOperatorImpl();
-		MetodosHighOrder.metodoUnaryOperator(personaUnaryOperator, 6);
-
-		// LAMBDA
-		MetodosHighOrder.metodoUnaryOperator(arg -> arg + 20, 5);
-
-		// METODOS REFERENCIADOS
-		MetodosHighOrder.metodoUnaryOperator(MetodosReferenciados::aplicarUO, 8);
+		LOG.info("UNARY OPERATOR ****************************************************************");
+		Stream<Integer> listaCambiada2 = listaNumero.stream().map(MetodosReferenciados::aplicarUO);
+		listaCambiada2.forEach(numero -> LOG.info("UNARY OPERATOR:" + numero));
 
 	}
 }
